@@ -5,11 +5,11 @@
  */
  
 #include <Servo.h>
-Servo myservo;
+Servo servo;
 
 int buttonPin = 2;
-int ledPin = 7;
-int delayTime = 50;
+int ledPin = 0;
+int servoPin = 4; // Porta Digital 4 PWM
 
 // variables will change
 int buttonStatus = 0;
@@ -24,8 +24,8 @@ void setup()
   pinMode(buttonPin, INPUT);
   // initialize the LED pin as an output
   pinMode(ledPin, OUTPUT);
-  // attachs the servo on one pin 8 to servo object
-  myservo.attach(8);
+  // attachs the servo on servoPin
+  servo.attach(servoPin);
 }
 
 void loop()
@@ -36,12 +36,12 @@ void loop()
     Serial.println("Botão pressionado");
     buttonStatus = 1;
     if (isServoMoving) {
-      digitalWrite(ledPin, LOW);
+      //digitalWrite(ledPin, LOW);
       isServoMoving = false;
       Serial.println("Stop servo motor");
     }
     else {
-      digitalWrite(ledPin, HIGH);
+      //digitalWrite(ledPin, HIGH);
       isServoMoving = true;
       Serial.println("Start servo motor");
     }
@@ -65,8 +65,8 @@ void loop()
 
 
 void MoveServo() {  
-  myservo.write(theta);
-  delay(delayTime);
+  servo.write(theta);
+  delay(50);
   
   if(direc == 0) {
     theta += 15;
@@ -83,7 +83,7 @@ void MoveServo() {
 }
 
 void StopServo() {
-  myservo.write(0);
-  delay(delayTime);
+  servo.write(0);
+  delay(50);
 }
 
